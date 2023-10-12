@@ -1,4 +1,4 @@
-package hello.advanced.aop.v0;
+package hello.advanced.app.v0;
 
 
 import lombok.RequiredArgsConstructor;
