@@ -1,34 +1,34 @@
-package hello.advanced.aop.v1;
+package hello.advanced.app.v2;
 
 
 import hello.advanced.trace.TraceStatus;
-import hello.advanced.trace.hellotrace.HelloTraceV1;
+import hello.advanced.trace.hellotrace.HelloTraceV2;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class OrderControllerV1 {
+public class OrderControllerV2 {
 
-    private final OrderServiceV1 orderService;
-    private final HelloTraceV1 traceV1;
+    private final OrderServiceV2 orderServiceV2;
+    private final HelloTraceV2 traceV2;
 
-    @GetMapping("/v1/request")
+    @GetMapping("/v2/request")
     public String request(String itemId) throws InterruptedException, IllegalAccessException {
 
         TraceStatus status = null;
 
         try {
-            status = traceV1.begin("OrderControllerV1.request()");
+            status = traceV2.begin("OrderControllerV2.request()");
 
-            orderService.orderItem(itemId);
+            orderServiceV2.orderItem(status.getTraceId(), itemId);
 
-            traceV1.end(status);
+            traceV2.end(status);
 
             return "ok";
         } catch (Exception e) {
-            traceV1.exception(status, e);
+            traceV2.exception(status, e);
 
             throw e;
         }
